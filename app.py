@@ -14,6 +14,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Force deployment refresh
+
 # Title and description
 st.title("📈 Financial Charting Tool")
 st.markdown("Real-time stock, ETF, and mutual fund analysis with interactive charts")

@@ -187,20 +187,26 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                 xaxis_rangeslider_visible=False
                             )
                             
-                            # Update Y-axes to show on both sides
-                            fig.update_yaxes(
-                                title_text="Price ($)",
-                                side="left"
-                            )
+                            # Add invisible trace to activate right Y-axis
                             fig.add_trace(go.Scatter(
-                                x=[None], y=[None],
+                                x=data.index,
+                                y=data['Close'],
                                 yaxis="y2",
-                                showlegend=False
+                                mode='lines',
+                                line=dict(color='rgba(0,0,0,0)'),  # Invisible line
+                                showlegend=False,
+                                hoverinfo='skip'
                             ))
+                            
+                            # Update Y-axes to show SAME scale on both sides
                             fig.update_layout(
+                                yaxis=dict(
+                                    title="Price ($)",
+                                    side="left"
+                                ),
                                 yaxis2=dict(
                                     title="Price ($)",
-                                    overlaying="y",
+                                    overlaying="y", 
                                     side="right",
                                     showgrid=False
                                 )
@@ -226,17 +232,22 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                 showlegend=False
                             )
                             
-                            # Update Y-axes to show on both sides
-                            vol_fig.update_yaxes(
-                                title_text="Volume",
-                                side="left"
-                            )
-                            vol_fig.add_trace(go.Scatter(
-                                x=[None], y=[None],
+                            # Add invisible trace to activate right Y-axis for volume
+                            vol_fig.add_trace(go.Bar(
+                                x=data.index,
+                                y=data['Volume'],
                                 yaxis="y2",
-                                showlegend=False
+                                marker_color='rgba(0,0,0,0)',  # Invisible bars
+                                showlegend=False,
+                                hoverinfo='skip'
                             ))
+                            
+                            # Update Y-axes to show SAME scale on both sides
                             vol_fig.update_layout(
+                                yaxis=dict(
+                                    title="Volume",
+                                    side="left"
+                                ),
                                 yaxis2=dict(
                                     title="Volume",
                                     overlaying="y",
@@ -346,7 +357,6 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                         
                         fig.update_layout(
                             title="Symbol Performance Comparison",
-                            yaxis_title="Percentage Change (%)",
                             xaxis_title="Date",
                             template="plotly_white",
                             height=600,
@@ -357,6 +367,44 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                 x=0.01
                             ),
                             hovermode='x unified'
+                        )
+                        
+                        # Get the Y-axis range from the data to ensure both axes match exactly
+                        all_values = []
+                        for symbol in valid_symbols:
+                            all_values.extend(df[f"{symbol}_pct"].tolist())
+                        y_min = min(all_values)
+                        y_max = max(all_values)
+                        
+                        # Add some padding
+                        y_padding = (y_max - y_min) * 0.1
+                        y_range = [y_min - y_padding, y_max + y_padding]
+                        
+                        # Add minimal invisible trace to activate right Y-axis
+                        fig.add_trace(go.Scatter(
+                            x=[df.index[0], df.index[-1]],  # Just first and last points
+                            y=[y_range[0], y_range[1]],     # Just min and max values
+                            yaxis="y2",
+                            mode='markers',
+                            marker=dict(size=0, opacity=0),  # Completely invisible
+                            showlegend=False,
+                            hoverinfo='skip'
+                        ))
+                        
+                        # Update Y-axes to show SAME scale on both sides with exact range
+                        fig.update_layout(
+                            yaxis=dict(
+                                title="Percentage Change (%)",
+                                side="left",
+                                range=y_range
+                            ),
+                            yaxis2=dict(
+                                title="Percentage Change (%)",
+                                overlaying="y", 
+                                side="right",
+                                showgrid=False,
+                                range=y_range  # Force same range
+                            )
                         )
                         
                         # Add zero line

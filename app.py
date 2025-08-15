@@ -183,7 +183,18 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                 template="plotly_white",
                                 height=500,
                                 showlegend=False,
-                                xaxis_rangeslider_visible=False
+                                xaxis_rangeslider_visible=False,
+                                yaxis=dict(
+                                    side="left",
+                                    title="Price ($)"
+                                ),
+                                yaxis2=dict(
+                                    side="right",
+                                    overlaying="y",
+                                    title="Price ($)",
+                                    showgrid=False,
+                                    zeroline=False
+                                )
                             )
                             
                             st.plotly_chart(fig, use_container_width=True)
@@ -204,7 +215,18 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                 xaxis_title="Date",
                                 template="plotly_white",
                                 height=200,
-                                showlegend=False
+                                showlegend=False,
+                                yaxis=dict(
+                                    side="left",
+                                    title="Volume"
+                                ),
+                                yaxis2=dict(
+                                    side="right",
+                                    overlaying="y",
+                                    title="Volume",
+                                    showgrid=False,
+                                    zeroline=False
+                                )
                             )
                             
                             st.plotly_chart(vol_fig, use_container_width=True)

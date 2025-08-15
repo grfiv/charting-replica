@@ -180,22 +180,29 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                             
                             fig.update_layout(
                                 title=f"{symbol} Stock Price - {chart_type}",
-                                yaxis_title="Price ($)",
                                 xaxis_title="Date",
                                 template="plotly_white",
                                 height=500,
                                 showlegend=False,
-                                xaxis_rangeslider_visible=False,
-                                yaxis=dict(
-                                    side="left",
-                                    title="Price ($)"
-                                ),
+                                xaxis_rangeslider_visible=False
+                            )
+                            
+                            # Update Y-axes to show on both sides
+                            fig.update_yaxes(
+                                title_text="Price ($)",
+                                side="left"
+                            )
+                            fig.add_trace(go.Scatter(
+                                x=[None], y=[None],
+                                yaxis="y2",
+                                showlegend=False
+                            ))
+                            fig.update_layout(
                                 yaxis2=dict(
-                                    side="right",
-                                    overlaying="y",
                                     title="Price ($)",
-                                    showgrid=False,
-                                    zeroline=False
+                                    overlaying="y",
+                                    side="right",
+                                    showgrid=False
                                 )
                             )
                             
@@ -213,21 +220,28 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                             
                             vol_fig.update_layout(
                                 title="Trading Volume",
-                                yaxis_title="Volume",
                                 xaxis_title="Date",
                                 template="plotly_white",
                                 height=200,
-                                showlegend=False,
-                                yaxis=dict(
-                                    side="left",
-                                    title="Volume"
-                                ),
+                                showlegend=False
+                            )
+                            
+                            # Update Y-axes to show on both sides
+                            vol_fig.update_yaxes(
+                                title_text="Volume",
+                                side="left"
+                            )
+                            vol_fig.add_trace(go.Scatter(
+                                x=[None], y=[None],
+                                yaxis="y2",
+                                showlegend=False
+                            ))
+                            vol_fig.update_layout(
                                 yaxis2=dict(
-                                    side="right",
-                                    overlaying="y",
                                     title="Volume",
-                                    showgrid=False,
-                                    zeroline=False
+                                    overlaying="y",
+                                    side="right",
+                                    showgrid=False
                                 )
                             )
                             

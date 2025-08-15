@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Financial Charting Tool 📈
 
-## Getting Started
+A real-time financial charting application built with Streamlit and Plotly for analyzing stocks, ETFs, and mutual funds.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 📊 Single Symbol Analysis
+- **Candlestick Charts** - Traditional OHLC candle patterns with volume
+- **OHLC Charts** - Open-High-Low-Close bar charts
+- **Line Charts** - Simple price trend visualization
+- **Volume Analysis** - Trading volume with price correlation
+- **Real-time Metrics** - Current price, 52-week high/low, market cap
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔍 Multi-Symbol Comparison
+- **Performance Comparison** - Percentage change from period start
+- **Multiple Timeframes** - 1 month to 2 years
+- **Interactive Charts** - Zoom, pan, hover for details
+- **Performance Summary** - Tabular comparison of returns
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🎯 Supported Assets
+- **Stocks** - Individual company stocks (AAPL, GOOGL, MSFT, etc.)
+- **ETFs** - Exchange-traded funds (VTI, SPY, QQQ, etc.)
+- **Mutual Funds** - Fund symbols supported by Yahoo Finance
+- **Indices** - Major market indices (^GSPC, ^DJI, ^IXIC)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Quick Start
 
-## Learn More
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone or download** this repository
+2. **Create virtual environment**:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Run the application**:
+   ```bash
+   streamlit run app.py
+   ```
+5. **Open your browser** to `http://localhost:8501`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+### Single Symbol Analysis
+1. Select **"Single Symbol"** mode in the sidebar
+2. Enter a stock symbol (e.g., "VTI", "AAPL")
+3. Choose your desired time period
+4. Select chart type (Candlestick, Line, or OHLC)
+5. Click **"📊 Draw Chart"**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Multi-Symbol Comparison
+1. Select **"Multi-Symbol Comparison"** mode
+2. Enter multiple symbols (one per line or comma-separated)
+3. Choose time period for comparison
+4. Click **"📊 Draw Chart"**
+5. View percentage performance comparison
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Technology Stack
+
+- **Frontend**: Streamlit (Python web framework)
+- **Charts**: Plotly (Interactive plotting library)
+- **Data**: yfinance (Yahoo Finance API wrapper)
+- **Analysis**: Pandas, NumPy
+
+## Data Source
+
+This application uses **Yahoo Finance** as its data source through the `yfinance` library. Data includes:
+- Real-time and historical stock prices
+- Trading volumes
+- Company information
+- Market indices
+
+## Examples
+
+### Popular Symbols to Try:
+
+**Technology Stocks:**
+- AAPL (Apple Inc.)
+- GOOGL (Alphabet Inc.)
+- MSFT (Microsoft Corp.)
+- NVDA (NVIDIA Corp.)
+
+**ETFs:**
+- VTI (Total Stock Market ETF)
+- SPY (S&P 500 ETF)
+- QQQ (NASDAQ-100 ETF)
+- VEA (Developed Markets ETF)
+
+**Comparison Ideas:**
+- Tech giants: AAPL, GOOGL, MSFT, AMZN
+- Market ETFs: VTI, SPY, QQQ
+- Sectors: XLF (Financial), XLE (Energy), XLK (Technology)
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues, feature requests, or pull requests.
+
+---
+
+**⚠️ Disclaimer**: This tool is for educational and informational purposes only. It should not be considered as financial advice. Always consult with a qualified financial advisor before making investment decisions.

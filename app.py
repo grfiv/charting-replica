@@ -113,6 +113,11 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                 ))
                             elif chart_type == "OHLC":
                                 # Custom OHLC implementation with proper bars
+                                # Calculate appropriate tick width based on data range
+                                date_range = data.index[-1] - data.index[0]
+                                tick_width = date_range / (len(data) * 8)  # Proportional to data density
+                                
+                                # Create OHLC bars
                                 for i, (date, row) in enumerate(data.iterrows()):
                                     color = '#00d4aa' if row['Close'] >= row['Open'] else '#ff6b6b'
                                     
@@ -121,28 +126,27 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                         x=[date, date],
                                         y=[row['Low'], row['High']],
                                         mode='lines',
-                                        line=dict(color=color, width=1),
+                                        line=dict(color=color, width=2),
                                         showlegend=False,
                                         hoverinfo='skip'
                                     ))
                                     
-                                    # Open tick (left)
-                                    tick_width = pd.Timedelta(hours=3)  # Adjust based on timeframe
+                                    # Open tick (left horizontal line)
                                     fig.add_trace(go.Scatter(
                                         x=[date - tick_width, date],
                                         y=[row['Open'], row['Open']],
                                         mode='lines',
-                                        line=dict(color=color, width=2),
+                                        line=dict(color=color, width=3),
                                         showlegend=False,
                                         hoverinfo='skip'
                                     ))
                                     
-                                    # Close tick (right)
+                                    # Close tick (right horizontal line)
                                     fig.add_trace(go.Scatter(
                                         x=[date, date + tick_width],
                                         y=[row['Close'], row['Close']],
                                         mode='lines',
-                                        line=dict(color=color, width=2),
+                                        line=dict(color=color, width=3),
                                         showlegend=False,
                                         hoverinfo='skip'
                                     ))

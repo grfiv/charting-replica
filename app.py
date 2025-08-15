@@ -112,17 +112,56 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                     decreasing_line_color='#ff6b6b'
                                 ))
                             elif chart_type == "OHLC":
-                                # Use Plotly's built-in OHLC chart with custom styling
-                                fig.add_trace(go.Ohlc(
+                                # Custom OHLC implementation with proper bars
+                                for i, (date, row) in enumerate(data.iterrows()):
+                                    color = '#00d4aa' if row['Close'] >= row['Open'] else '#ff6b6b'
+                                    
+                                    # High-Low vertical line
+                                    fig.add_trace(go.Scatter(
+                                        x=[date, date],
+                                        y=[row['Low'], row['High']],
+                                        mode='lines',
+                                        line=dict(color=color, width=1),
+                                        showlegend=False,
+                                        hoverinfo='skip'
+                                    ))
+                                    
+                                    # Open tick (left)
+                                    tick_width = pd.Timedelta(hours=3)  # Adjust based on timeframe
+                                    fig.add_trace(go.Scatter(
+                                        x=[date - tick_width, date],
+                                        y=[row['Open'], row['Open']],
+                                        mode='lines',
+                                        line=dict(color=color, width=2),
+                                        showlegend=False,
+                                        hoverinfo='skip'
+                                    ))
+                                    
+                                    # Close tick (right)
+                                    fig.add_trace(go.Scatter(
+                                        x=[date, date + tick_width],
+                                        y=[row['Close'], row['Close']],
+                                        mode='lines',
+                                        line=dict(color=color, width=2),
+                                        showlegend=False,
+                                        hoverinfo='skip'
+                                    ))
+                                
+                                # Add invisible scatter for hover info
+                                fig.add_trace(go.Scatter(
                                     x=data.index,
-                                    open=data['Open'],
-                                    high=data['High'],
-                                    low=data['Low'],
-                                    close=data['Close'],
+                                    y=data['Close'],
+                                    mode='markers',
+                                    marker=dict(size=0, opacity=0),
                                     name=symbol,
-                                    increasing_line_color='#00d4aa',
-                                    decreasing_line_color='#ff6b6b',
-                                    line=dict(width=1.5)
+                                    customdata=list(zip(data['Open'], data['High'], data['Low'], data['Close'])),
+                                    hovertemplate="<b>%{fullData.name}</b><br>" +
+                                                "Date: %{x}<br>" +
+                                                "Open: $%{customdata[0]:.2f}<br>" +
+                                                "High: $%{customdata[1]:.2f}<br>" +
+                                                "Low: $%{customdata[2]:.2f}<br>" +
+                                                "Close: $%{customdata[3]:.2f}<br>" +
+                                                "<extra></extra>"
                                 ))
                             else:  # Line Chart
                                 fig.add_trace(go.Scatter(

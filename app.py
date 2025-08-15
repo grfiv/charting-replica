@@ -122,14 +122,7 @@ if st.sidebar.button("📊 Draw Chart", type="primary", use_container_width=True
                                     name=symbol,
                                     increasing_line_color='#00d4aa',
                                     decreasing_line_color='#ff6b6b',
-                                    line=dict(width=1.5),
-                                    hovertemplate="<b>%{fullData.name}</b><br>" +
-                                                "Date: %{x}<br>" +
-                                                "Open: $%{open:.2f}<br>" +
-                                                "High: $%{high:.2f}<br>" +
-                                                "Low: $%{low:.2f}<br>" +
-                                                "Close: $%{close:.2f}<br>" +
-                                                "<extra></extra>"
+                                    line=dict(width=1.5)
                                 ))
                             else:  # Line Chart
                                 fig.add_trace(go.Scatter(

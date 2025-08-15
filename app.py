@@ -58,7 +58,7 @@ with st.sidebar:
         # Multi-symbol comparison
         symbols_input = st.text_area(
             "Enter Symbols (one per line or comma-separated)", 
-            value="VTI\nSPY\nQQQ",
+            value="VTI\nBRK-B\nHARD",
             help="Enter multiple symbols to compare"
         )
         
